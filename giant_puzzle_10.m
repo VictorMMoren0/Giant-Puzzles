@@ -1,7 +1,7 @@
 clear all
 close all
 clc
-tic
+
 %% Comments
 %
 % This code initially generates a random matrix of size n x n with entries
@@ -25,7 +25,7 @@ tic
 % starts with a new matrix.
 
 %% General Parameters
-n = 15; % Matrix dimensions
+n = 14; % Matrix dimensions
 m = 10; % Number of random vectors at each iteration
 max_itera = 1e2; % Maximum number of iterations
 
@@ -71,4 +71,3 @@ if sign(det(final_A)) == -1
     final_A([1,2],:) = final_A([2,1],:)
     factor(int(det(final_A)))
 end
-t = toc
