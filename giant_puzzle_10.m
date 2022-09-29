@@ -30,7 +30,7 @@ m = 10; % Number of random vectors at each iteration
 max_itera = 1e2; % Maximum number of iterations
 
 %% Additional Parameters
-n_vec = 2;
+n_vec = 1;
 c_max = 1e6;
 
 %% Main
