@@ -8,12 +8,12 @@ clc
 % 1 or -1, then at each iteration it generates 'm' random vectors of length
 % n with entries 1 or -1 and it is applied the product of the matrix with
 % the vector. After that, the corresponding vector to which the final
-% vector has more zeros (more 'orthogonality' with the lines of the matrix)
-% is substituted with the line that has the greater inner product (in
-% absolute value, less 'orthogonal'). If the absolute value of the
-% determinant of the new matrix is greater than the previous one, this is
-% our new matrix and the code proceed to the next iteration, otherwise the
-% matrix keeps the same.
+% vector (obtained by the product) has more zeros (more 'orthogonality'
+% with the lines of the matrix) is substituted with the line that has the 
+% greater inner product (in absolute value, less 'orthogonal'). If the
+% absolute value of the determinant of the new matrix is greater than the 
+% previous one, this is our new matrix and the code proceed to the next
+% iteration, otherwise the matrix keeps the same.
 % 
 % Some additional parameters are given:
 % - n_vec: if wanted, it is possible to create 'n_vec' vectors at each
@@ -25,7 +25,7 @@ clc
 % starts with a new matrix.
 
 %% General Parameters
-n = 14; % Matrix dimensions
+n = 15; % Matrix dimensions
 m = 10; % Number of random vectors at each iteration
 max_itera = 1e2; % Maximum number of iterations
 
@@ -35,11 +35,13 @@ c_max = 1e6;
 
 %% Main
 final_A = zeros(n);
+itera = 0;
 
 for itera = 1:max_itera
     A = 2 * randi([0,1],n) - 1; % Initial Matrix
+    c = 0;
     
-    for c = 1:c_max
+    while c < c_max
         if abs(det(A)) > abs(det(final_A))
             final_A = A;
         end
@@ -58,16 +60,19 @@ for itera = 1:max_itera
         new_A = A;
         new_A(k,:) = random_vec;
 
+        c = c + 1;
+        
         if abs(det(new_A)) > abs(det(A))
             A = new_A;
             [det(A) det(final_A)] % Show the current max determinant and the global max
+            c = 0; % Restart the counting
         end
     end
 end
 
 if sign(det(final_A)) == -1
-    % If the determinant is negative, change the first 2 lines to get
-    % positive
+    % If the determinant is negative, change the first 2 lines so that
+    % it becomes positive
     final_A([1,2],:) = final_A([2,1],:)
     factor(int(det(final_A)))
 end
